@@ -9,9 +9,11 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import fr.ncouret.aoc2023.TestUtils;
+
 class Day1Test {
 
-    private static final Path DAY1 = Paths.get("src", "test", "resources", "day1").toAbsolutePath();
+    private static final Path DAY1 = TestUtils.TEST_RESOURCE_PATH.resolve(Paths.get("day1"));
 
     @Test
     void testStar1() {

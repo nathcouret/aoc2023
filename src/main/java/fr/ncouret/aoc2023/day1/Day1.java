@@ -50,7 +50,7 @@ public class Day1 {
         try (var reader = new BufferedReader(new FileReader(inputPath))) {
             return reader.lines()
                     .mapToInt(processor)
-                    .peek(System.out::println)
+                    //.peek(System.out::println)
                     .reduce(accumulator)
                     .orElse(-1);
         } catch (IOException e) {
