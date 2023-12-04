@@ -4,17 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.IntBinaryOperator;
 import java.util.function.ToIntFunction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import fr.ncouret.aoc2023.Utils;
+
 public class Day1 {
 
 
-    public static final Path RESOURCES = Paths.get("src", "main", "resources").toAbsolutePath();
+    private static final Path DAY1 = Utils.RESOURCES_PATH.resolve("day1");
+    private static final Logger LOGGER = LoggerFactory.getLogger(Day1.class);
 
     private static final Map<String, String> DIGITS = Map.of(
             "zero", "0",
@@ -30,12 +35,11 @@ public class Day1 {
     );
 
     public static void main(String[] args) {
-        var dataPath = RESOURCES.resolve(Paths.get("day1", "data.txt")).toString();
-        System.out.println("toto:" + dataPath);
+        var dataPath = DAY1.resolve("data.txt").toString();
         var star1 = star1(dataPath);
         var star2 = star2(dataPath);
-        System.out.println(star1);
-        System.out.println(star2);
+        LOGGER.info("Star 1: {}", star1);
+        LOGGER.info("Star 2: {}", star2);
     }
 
     public static int star1(String inputPath) {
@@ -50,7 +54,7 @@ public class Day1 {
         try (var reader = new BufferedReader(new FileReader(inputPath))) {
             return reader.lines()
                     .mapToInt(processor)
-                    //.peek(System.out::println)
+                    .peek(i -> LOGGER.debug("{}", i))
                     .reduce(accumulator)
                     .orElse(-1);
         } catch (IOException e) {
@@ -72,8 +76,8 @@ public class Day1 {
         String copy = line;
         List<String> digits = new ArrayList<>();
         while (!copy.isBlank()) {
-            //System.out.println(copy);
-            //System.out.println(digits);
+            LOGGER.debug("{}", copy);
+            LOGGER.debug("{}", digits);
             int advance = 1;
             if (Character.isDigit(copy.charAt(0))) {
                 digits.add(String.valueOf(copy.charAt(0)));

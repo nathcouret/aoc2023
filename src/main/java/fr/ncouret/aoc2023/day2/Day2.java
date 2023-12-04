@@ -8,19 +8,22 @@ import java.util.function.IntBinaryOperator;
 import java.util.function.IntPredicate;
 import java.util.function.ToIntFunction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.ncouret.aoc2023.Utils;
 
 public class Day2 {
-
     public static final Path RESOURCES = Utils.RESOURCES_PATH.resolve("day2");
+    private static final Logger LOGGER = LoggerFactory.getLogger(Day2.class);
 
     public static void main(String[] args) {
         var dataPath = RESOURCES.resolve("data.txt").toString();
 
         int star1 = star1(dataPath);
         int star2 = star2(dataPath);
-        System.out.println(star1);
-        System.out.println(star2);
+        LOGGER.info("Star 1: {}", star1);
+        LOGGER.info("Star 2: {}", star2);
     }
 
     public static int star1(String inputPath) {
@@ -36,7 +39,7 @@ public class Day2 {
             return reader.lines()
                 .mapToInt(processor)
                 .filter(filter)
-                .peek(System.out::println)
+                .peek(i -> LOGGER.debug(String.valueOf(i)))
                 .reduce(accumulator)
                 .orElse(0);
         } catch (IOException e) {
@@ -54,8 +57,8 @@ public class Day2 {
 
     private static int star2Process(String gameInput) {
         Game game = Game.parse(gameInput);
-        //System.out.println(game);
-        System.out.println("power: " + game.power());
+        LOGGER.trace(game.toString());
+        LOGGER.debug("power: {}", game.power());
         return game.power();
     }
 }
